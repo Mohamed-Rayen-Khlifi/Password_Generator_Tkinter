@@ -1,16 +1,8 @@
 from random import randint
 import tkinter as tk
 
+
 root = tk.Tk()
-
-root.geometry("750x500")
-root.title("Password Generator")
-
-label = tk.Label(root, text="Password Generator", font=("Arial", 18)).pack(
-    padx=20, pady=20
-)
-
-textbox = tk.Text(root, height=3, font=("Arial", 18)).pack(padx=10)
 
 
 padding_x = 20
@@ -18,7 +10,6 @@ padding_y = 20
 
 fg_color = "#12F5F9"
 bg_color = "white"
-
 
 numbers = tk.BooleanVar()
 low_case = tk.BooleanVar()
@@ -31,28 +22,53 @@ lower_case_characters = "abcdefghijklmnopqrstuvwxyz"
 capital_case_charaters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 special_characters = '²&é"()-è_çà)=^$*ù!:;,<>/%§/.?°@'
 
-symbols = ''
+symbols = ""
 
 
 def add_numbers():
     global symbols
     symbols += numbers
 
+
 def add_lower():
-    global symbols 
+    global symbols
     symbols += lower_case_characters
 
+
 def add_capital():
-    global symbols 
+    global symbols
     symbols += capital_case_charaters
 
+
 def add_special():
-    global symbols 
+    global symbols
     symbols += special_characters
+
 
 def generate_password():
     global symbols
-    print(symbols)
+    global length
+    password = ""
+    loop_num = length.get("1.0", "end-1c")
+    if symbols == "":
+        password = "Empty password"
+    else:
+        i = 0
+        while i < int(loop_num):
+            password += symbols[randint(0, len(symbols) - 1)]
+            i += 1
+        passwd = tk.Text(root, font=("Arial, 18"), height=1, width=25)
+
+        passwd.insert("1.0", password)
+        passwd.pack(padx=padding_x, pady=padding_y)
+
+
+root.geometry("1500x1500")
+root.title("Password Generator")
+
+label = tk.Label(root, text="Password Generator", font=("Arial", 18)).pack(
+    padx=padding_x, pady=padding_y
+)
 
 numbers_check = tk.Checkbutton(
     root,
@@ -67,7 +83,7 @@ numbers_check = tk.Checkbutton(
     padx=padding_x,
     pady=padding_y,
     compound="left",
-)
+).pack()
 
 lower_case_char_check = tk.Checkbutton(
     root,
@@ -114,40 +130,13 @@ special_char_check = tk.Checkbutton(
     compound="left",
 ).pack()
 
-button = tk.Button(root, text="Generate Password", font=("Arial, 18"), command=generate_password).pack(pady=10)
+length = tk.Text(root, font=("Arial", 18), height=4, width=25)
+length.insert("1.0", "Please specify the length of your password")
+length.pack(padx=padding_x, pady=padding_y)
+
+
+button = tk.Button(
+    root, text="Generate Password", font=("Arial, 18"), command=generate_password
+).pack(pady=10)
 
 root.mainloop()
-
-
-
-
-
-
-
-# length = int(input("6] Please provide the length of your password: "))
-
-# symbols = ""
-
-# if numbers_prompt == "y":
-# symbols += numbers
-# if characters_prompt == "y":
-# symbols += characters
-# if special_characters_prompt == "y":
-# symbols += special_characters
-# if majus_characters_prompt == "y":
-# symbols += majus_charaters
-
-# if symbols == "":
-# print("Empty password!")
-# else:
-# response = ""
-# while response != "q":
-# password = ""
-# if first_name == "y":
-# password += first_three[0:3]
-# i = 0
-# while i < length:
-# password += symbols[randint(0, len(symbols) - 1)]
-# i += 1
-# print("Your password is ---------->","\033[1m","\033[93m",password,"\033[0m","<----------",)
-# response = input("Continue? (Enter/q): ")
